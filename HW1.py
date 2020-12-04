@@ -369,7 +369,9 @@ plt.show()
 # One of the most common linear classification models is *logistic regression* – abbreviated ‘LR’. We will use this model through our assignment from now on.\
 # Implement the function `pred_log` which is in the module `lin_classifier`. It should return a tuple of two elements. The first one is a vector of `predicted classes` and the other one is the weighting matrix (`w`) that should have the shape of (# of classes, # of features). We will use the one-vs-rest (ovr) form of multinomial LR in order to interpret the results using odds ratio later on.
 # 
-# As you noticed, most of our data is labeled as "Normal" which means that our data is *imbalanced*. This can cause **biased learning**. This is the reason why we *stratification* when we split out data to train and test sets. Stratification means that the split preserves the percentage of samples for each class.
+# As you noticed, most of our data is labeled as "Normal" which means that our data is *imbalanced*.
+# This can cause **biased learning**. This is the reason why we *stratification* when we split out data to train and test sets.
+# Stratification means that the split preserves the percentage of samples for each class.
 
 # In[ ]:
 
