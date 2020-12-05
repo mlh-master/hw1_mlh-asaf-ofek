@@ -100,7 +100,11 @@ def odds_ratio(w, X, selected_feat='LB'):
              odds_ratio: the odds ratio of the selected feature and label
     """
     # ------------------ IMPLEMENT YOUR CODE HERE:-----------------------------
-
+    w_0 = w[0]
+    i = X.columns.get_loc(selected_feat)
+    odd_ratio = np.exp(w_0[i])
+    X_numpy = X.to_numpy()
+    odds = np.median(np.exp(X_numpy @ w_0))
     # --------------------------------------------------------------------------
 
     return odds, odd_ratio

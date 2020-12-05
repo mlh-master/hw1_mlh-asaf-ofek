@@ -402,66 +402,71 @@ print("F1 score is: " + str("{0:.2f}".format(100 * metrics.f1_score(y_test, y_pr
 
 selected_feat = 'LB'
 
-# odds, ratio = odds_ratio(w, X_, selected_feat=selected_feat)  # you have to fill the right X first
+odds, ratio = odds_ratio(w, X_train, selected_feat=selected_feat)  # you have to fill the right X first
+
+print(f'The odds ratio of {selected_feat} for Normal is {ratio}')
+print(f"The odds to be labeled as 'Normal' is {odds}")
+
+
+### Question:
+#**Q6:** What is the meaning of your results? Explain the difference between odds_ratio and odds.
+
+### Answers:
+# **Q6:**
 #
-# print(f'The odds ratio of {selected_feat} for Normal is {ratio}')
-# print(f"The odds to be labeled as 'Normal' is {odds}")
+# Now let's see if normalization and standardization help us.
+# Fill the next cell and print the three accuracies of the standardized and normalized training and testing data.
+# *Important notes*:
 #
+# * Avoid information leakage! (from the test set to the train set)
+# * Do not apply the `norm_standard (nsd)` function on the labels.
+# * Set the `flag` argument to `False` when using `nsd` function.
 #
-# # ### Question:
-# # **Q6:** What is the meaning of your results? Explain the difference between odds_ratio and odds.
+# In[ ]:
 #
-# # ### Answers:
-# # **Q6:**
-#
-# # Now let's see if normalization and standardization help us. Fill the next cell and print the three accuracies of the standardized and normalized training and testing data. *Important notes*:
-# #
-# # * Avoid information leakage! (from the test set to the train set)
-# # * Do not apply the `norm_standard (nsd)` function on the labels.
-# # * Set the `flag` argument to `False` when using `nsd` function.
-#
-# # In[ ]:
-#
-#
-# # Implement your code here:
-# mode = # choose a mode from the `nsd`
-# y_pred, w_norm_std = pred_log(logreg,) # complete this function using nsd function
-# print("Accuracy is: " + str("{0:.2f}".format(100 * metrics.accuracy_score(y_test, y_pred))) + "%")
-# print("F1 score is: " + str("{0:.2f}".format(100 * metrics.f1_score(y_test, y_pred, average='macro'))) + "%")
-#
-#
-# # You can choose now one of the training-testing dataset and stick to it. Let's visualize our learned parameters. Use your chosen weight matrix as an input to the function `w_no_p_table` in the next cell.
-#
-# # In[ ]:
-#
-#
-# input_mat =  # Fill this argument
-# w_no_p_table(input_mat,orig_feat)
-#
-#
-# # ### Questions:
-# # **Q7:** Mention one advantage of using cross entropy as the cost function.
-# #
-# #
-# # **Q8:** By selecting one feature at a time and compare their learned weights by looking at plots we had, what can you tell about the weights relations? Why does it happen? **Hint:** notice the sign of the weights and remember that an exponent is a monotonic function.
-#
-# # ### Answers:
-# # **Q7:**
-# #
-# # **Q8:**
-#
-# # Ok, now let's recall that in the lecture you saw that accuracy is not always our best measure. Sensitivity and specificity can be much more informative and important mostly. The choice to train a model to have better results in sensitivity aspect rather than specificity or vice versa depends on our application.
-#
-# # In[ ]:
+
+# Implement your code here:
+mode = nsd(CTG_features, selected_feat, mode = 'MinMax', flag = False)
+# fetal_state_nsd = mode[['NSP']]
+X_train_nsd, X_test_nsd, y_train_nsd, y_test_nsd = train_test_split(mode, np.ravel(fetal_state), test_size=0.2, random_state=0, stratify=np.ravel(fetal_state))
+y_pred, w_norm_std = pred_log(logreg, X_train_nsd, y_train_nsd, X_test_nsd) # complete this function using nsd function
+print("Accuracy is: " + str("{0:.2f}".format(100 * metrics.accuracy_score(y_test, y_pred))) + "%")
+print("F1 score is: " + str("{0:.2f}".format(100 * metrics.f1_score(y_test, y_pred, average='macro'))) + "%")
+
+
+# You can choose now one of the training-testing dataset and stick to it.
+# Let's visualize our learned parameters.
+# Use your chosen weight matrix as an input to the function `w_no_p_table` in the next cell.
+
+# In[ ]:
+
+input_mat = w_norm_std
+w_no_p_table(input_mat,orig_feat)
+
+
+# ### Questions:
+# **Q7:** Mention one advantage of using cross entropy as the cost function.
 #
 #
-# cnf_matrix = metrics.confusion_matrix(y_test, y_pred)
-# ax = plt.subplot()
-# sns.heatmap(cnf_matrix, annot=True, xticklabels=['Normal','Suspect','Pathology'], yticklabels=['Normal','Suspect','Pathology'])
-# ax.set(ylabel='True labels', xlabel='Predicted labels')
-# plt.show()
+# **Q8:** By selecting one feature at a time and compare their learned weights by looking at plots we had, what can you tell about the weights relations? Why does it happen? **Hint:** notice the sign of the weights and remember that an exponent is a monotonic function.
+
+# ### Answers:
+# **Q7:**
 #
-#
+# **Q8:**
+
+# Ok, now let's recall that in the lecture you saw that accuracy is not always our best measure. Sensitivity and specificity can be much more informative and important mostly. The choice to train a model to have better results in sensitivity aspect rather than specificity or vice versa depends on our application.
+
+# In[ ]:
+
+
+cnf_matrix = metrics.confusion_matrix(y_test, y_pred)
+ax = plt.subplot()
+sns.heatmap(cnf_matrix, annot=True, xticklabels=['Normal','Suspect','Pathology'], yticklabels=['Normal','Suspect','Pathology'])
+ax.set(ylabel='True labels', xlabel='Predicted labels')
+plt.show()
+
+
 # # ### Questions:
 # # **Q9:** What do you think is more important to us with this data? What is the clinical risk/cost for False Positive (FP) and False Negative (FN)?
 #
