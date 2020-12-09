@@ -107,7 +107,7 @@ def odds_ratio(w, X, selected_feat='LB'):
     :return: odds: median odds of all patients for the selected feature and label
              odds_ratio: the odds ratio of the selected feature and label
     """
-    # ------------------ IMPLEMENT YOUR CODE HERE:-----------------------------
+    # ------------------ IMPLEMENT YOUR CODE HERE:---------------------------------
     #odds is (p/1-p)
     X_co = X.copy()
     all_odds = np.exp(X_co@w.transpose())

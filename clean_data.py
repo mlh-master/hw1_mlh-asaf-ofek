@@ -18,7 +18,7 @@ def rm_ext_and_nan(CTG_features, extra_feature):
     """
     c_ctg={}
     c_ctg = dict()
-    # ------------------ IMPLEMENT YOUR CODE HERE:------------------------------
+    # ------------------ IMPLEMENT YOUR CODE HERE:--------------------------------
     nan = CTG_features.copy()
     del nan[extra_feature]
     for col in nan:
