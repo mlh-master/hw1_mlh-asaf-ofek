@@ -22,7 +22,6 @@ def pred_log(logreg, X_train, y_train, X_test, flag=False):
     logreg.fit(X_train, y_train)
     w_log = logreg.coef_
     y_pred_log = logreg.predict(X_test)
-    y_pred_log = logreg.predict_prob
     # -------------------------------------------------------------------------
     return y_pred_log, w_log
 
