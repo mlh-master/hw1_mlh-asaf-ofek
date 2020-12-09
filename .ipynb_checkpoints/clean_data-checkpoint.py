@@ -104,8 +104,8 @@ def phys_prior(c_cdf, feature, thresh):
     c_temp = c_cdf.copy()
     filt_feature = []
     # ------------------ IMPLEMENT YOUR CODE HERE:-----------------------------
-    c_temp[feature][c_temp[feature] > thresh] = None
-    len = c_temp[feature].notna()
+    c_temp[feature][c_temp[feature]>thresh]= None
+    len = c_temp[feature].isna()
     idx = len[len].index
     filt_feature.append(c_temp[feature][idx])
     # -------------------------------------------------------------------------
